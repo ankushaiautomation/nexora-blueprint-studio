@@ -28,3 +28,8 @@ use the editor.
   own key and store it in Secrets.
 - **Secrets.** Lovable manages them. Do not put secret values in the repo.
 <!-- LOVABLE:END -->
+
+## Project rules
+- Site content (services, solutions, projects, contact email, WhatsApp link) lives in `src/lib/site.ts`; pages render from it so copy changes happen in one place.
+- Each site section is its own route (`/services`, `/solutions`, `/portfolio`, `/about`, `/contact`) with its own `head()` via `pageMeta` in `src/lib/seo.ts`, for per-page SEO.
+- The contact form has no backend: it validates with zod and opens a pre-filled `mailto:` link (`src/lib/contact.ts`), per the no-backend requirement.
