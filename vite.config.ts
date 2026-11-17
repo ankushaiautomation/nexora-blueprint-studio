@@ -7,9 +7,22 @@
 // the build fails. Never add compression (compressPublicAssets, vite-plugin-compression):
 // hosting already compresses at the edge.
 // You can pass additional config via defineConfig({ vite: { ... }, etc... }) if needed.
+import { cloudflare } from "@cloudflare/vite-plugin";
 import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 
+// Lovable's preview and publish builds set these; there the built-in Nitro Cloudflare build is used.
+// Everywhere else (local dev, CI, `wrangler deploy`) use Cloudflare's official Vite plugin instead,
+// with Nitro switched off so the server bundle isn't built twice. Config lives in wrangler.jsonc.
+const isLovableBuild =
+  process.env["LOVABLE_SANDBOX"] === "1" || !!process.env["DEV_SERVER__PROJECT_PATH"];
+
 export default defineConfig({
+  ...(isLovableBuild
+    ? {}
+    : {
+        nitro: false as const,
+        plugins: [cloudflare({ viteEnvironment: { name: "ssr" } })],
+      }),
   tanstackStart: {
     // Redirect TanStack Start's bundled server entry to src/server.ts (our SSR error wrapper).
     // nitro/vite builds from this

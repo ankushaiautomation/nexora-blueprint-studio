@@ -33,3 +33,4 @@ use the editor.
 - Site content (services, solutions, projects, contact email, WhatsApp link) lives in `src/lib/site.ts`; pages render from it so copy changes happen in one place.
 - Each site section is its own route (`/services`, `/solutions`, `/portfolio`, `/about`, `/contact`) with its own `head()` via `pageMeta` in `src/lib/seo.ts`, for per-page SEO.
 - The contact form has no backend: it validates with zod and opens a pre-filled `mailto:` link (`src/lib/contact.ts`), per the no-backend requirement.
+- Outside Lovable, builds use Cloudflare's official Vite plugin with `wrangler.jsonc` (Nitro off); inside Lovable (`LOVABLE_SANDBOX`/`DEV_SERVER__PROJECT_PATH` set) the built-in Nitro Cloudflare build stays on, so both self-deploys and Lovable publishing keep working. Deploy with `npm run deploy`.

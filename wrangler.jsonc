@@ -1,0 +1,12 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "nexora-ai",
+  "compatibility_date": "2026-11-17",
+  "compatibility_flags": ["nodejs_compat"],
+  // The project's own server entry (src/server.ts) wraps TanStack Start's
+  // server entry with SSR error handling.
+  "main": "src/server.ts",
+  "observability": {
+    "enabled": true
+  }
+}
